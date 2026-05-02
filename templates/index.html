@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>SafeNet — Простота и Безопасность</title>
+    <style>
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #B0DB9C;
+            color: #1a1a1a;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        nav {
+            padding: 20px 10%;
+            border-bottom: 1px solid #eee; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #logo {
+            font-size: 20px;
+            font-weight: 600;
+            color: #40ff00;
+            letter-spacing: -0.5px;
+        }
+
+        .container {
+            max-width: 650px; 
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h2 { font-weight: 500; font-size: 22px; margin-bottom: 25px; }
+
+    
+        .input-group { margin-bottom: 20px; }
+        
+        label { display: block; font-size: 14px; margin-bottom: 5px; color: #666; }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 0;
+            border: none;
+            border-bottom: 2px solid #eee; 
+            font-size: 16px;
+            background: none;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-bottom-color: #E8F5BD;
+        }
+
+        .btn {
+            background: #84B179; 
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: opacity 0.2s;
+        }
+
+        .btn:hover { opacity: 0.8; }
+
+        
+        .post {
+            margin-top: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .category-tag {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .error-msg {
+            color: #e74c3c;
+            font-size: 13px;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+    
+</head>
+<body>
+
+<nav>
+    <div id="logo">SafeNet</div>
+    <div style="font-size: 14px;">Личный кабинет</div>
+</nav>
+
+<div class="container">
+    <h2>Новая публикация</h2>
+    
+    <div class="input-group">
+        <label>О чем ваша новость?</label>       
+        <select id="category">
+            <option value="">-- Выберите ситуацию --</option>
+            <option value="Кража">Кража личных вещей</option>
+            <option value="Мошенничество">Финансовое мошенничество</option>
+            <option value="Магазин">Подозрительный интернет-магазин</option>
+            <option value="Другое">Другое нарушение</option>
+        </select>
+    </div>
+
+    <div class="input-group">
+        <label>Заголовок</label>
+        <input type="text" id="title" placeholder="Краткая суть...">
+    </div>
+
+    <div class="input-group">
+        <label>Детальное описание (не менее 15 слов)</label>
+        <textarea id="content" rows="5" placeholder="Опишите ситуацию максимально подробно..."></textarea>
+        <div id="wordCountHint" style="font-size: 12px; color: #999;">Слов: 0 / 15</div>
+        <div id="error" class="error-msg">Описание слишком короткое. Нужно минимум 15 слов для проверки модератором.</div>
+    </div>
+
+    <button class="btn" onclick="submitPost()">Опубликовать</button>
+
+    <div id="feed">
+        </div>
+</div>
+
+<script>
+    const contentInput = document.getElementById('content');
+    const wordCountHint = document.getElementById('wordCountHint');
+
+
+    contentInput.addEventListener('input', function() {
+        const words = this.value.trim().split(/\s+/).filter(word => word.length > 0);
+        wordCountHint.innerText = `Слов: ${words.length} / 15`;
+        if (words.length >= 15) {
+            wordCountHint.style.color = "#27ae60";
+        } else {
+            wordCountHint.style.color = "#999";
+        }
+    });
+
+    function submitPost() {
+        const cat = document.getElementById('category').value;
+        const title = document.getElementById('title').value;
+        const text = contentInput.value.trim();
+        const error = document.getElementById('error');
+
+    
+        if (!cat) {
+            alert("Пожалуйста, выберите категорию новости.");
+            return;
+        }
+
+
+        const wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
+
+        if (wordCount < 15) {
+            error.style.display = "block";
+            return;
+        } else {
+            error.style.display = "none";
+        }
+
+        
+        const feed = document.getElementById('feed');
+        const newPost = `
+            <div class="post">
+                <div class="category-tag">${cat}</div>
+                <h3 style="margin: 10px 0;">${title}</h3>
+                <p>${text}</p>
+                <button class="btn" style="background:#eee; color:#333; padding: 8px 15px;" onclick="confirmCheck(this)">
+                    Проверить документ
+                </button>
+            </div>
+        `;
+        
+        feed.insertAdjacentHTML('afterbegin', newPost);
+        
+    
+        document.getElementById('title').value = "";
+        contentInput.value = "";
+        document.getElementById('category').value = "";
+        wordCountHint.innerText = "Слов: 0 / 15";
+    }
+
+    function confirmCheck(btn) {
+        btn.innerText = "Запрос отправлен модератору";
+        btn.disabled = true;
+        btn.style.opacity = "0.5";
+    }
+</script>
+
+</body>
+</html>
