@@ -1,201 +1,403 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>SafeNet — Простота и Безопасность</title>
-    <style>
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: #B0DB9C;
-            color: #1a1a1a;
-            margin: 0;
-            line-height: 1.6;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        nav {
-            padding: 20px 10%;
-            border-bottom: 1px solid #eee; 
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+<title>SafeNet</title>
 
-        #logo {
-            font-size: 20px;
-            font-weight: 600;
-            color: #40ff00;
-            letter-spacing: -0.5px;
-        }
+<style>
 
-        .container {
-            max-width: 650px; 
-            margin: 40px auto;
-            padding: 0 20px;
-        }
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#B0DB9C;
+}
 
-        h2 { font-weight: 500; font-size: 22px; margin-bottom: 25px; }
+nav{
+    background:#3ea54f;
+    color:rgb(206, 243, 206);
+    padding:15px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
 
-    
-        .input-group { margin-bottom: 20px; }
-        
-        label { display: block; font-size: 14px; margin-bottom: 5px; color: #666; }
+#logo{
+    font-size:24px;
+    font-weight:bold;
+}
 
-        input, textarea, select {
-            width: 100%;
-            padding: 12px 0;
-            border: none;
-            border-bottom: 2px solid #eee; 
-            font-size: 16px;
-            background: none;
-            outline: none;
-            transition: border-color 0.3s;
-        }
+#profileBtn{
+    background:white;
+    color:#3ea54f;
+    padding:10px 20px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+}
 
-        input:focus, textarea:focus, select:focus {
-            border-bottom-color: #E8F5BD;
-        }
+.container{
+    max-width:800px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+}
 
-        .btn {
-            background: #84B179; 
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: opacity 0.2s;
-        }
+.input-group{
+    margin-bottom:20px;
+}
 
-        .btn:hover { opacity: 0.8; }
+label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:bold;
+}
 
-        
-        .post {
-            margin-top: 40px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid #f0f0f0;
-        }
+input,
+textarea,
+select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:10px;
+    font-size:16px;
+    box-sizing:border-box;
+}
 
-        .category-tag {
-            font-size: 12px;
-            text-transform: uppercase;
-            color: #27ae60;
-            font-weight: bold;
-        }
+textarea{
+    resize:vertical;
+}
 
-        .error-msg {
-            color: #e74c3c;
-            font-size: 13px;
-            margin-top: 10px;
-            display: none;
-        }
-    </style>
-    
+.btn{
+    background:#3ea54f;
+    color:white;
+    border:none;
+    padding:14px 25px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:16px;
+    transition:0.3s;
+}
+
+.btn:hover{
+    background:#2d8a3b;
+}
+
+.post{
+    background:#f5f5f5;
+    padding:20px;
+    border-radius:12px;
+    margin-top:20px;
+}
+
+.category{
+    color:green;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.deleteBtn{
+    margin-top:15px;
+    background:#ff4d4d;
+}
+
+.deleteBtn:hover{
+    background:#e60000;
+}
+
+#error{
+    color:red;
+    margin-top:10px;
+    display:none;
+}
+
+.hidden{
+    display:none;
+}
+
+.backBtn{
+    margin-bottom:20px;
+    display:inline-block;
+}
+
+.empty{
+    text-align:center;
+    color:#666;
+    margin-top:30px;
+}
+
+</style>
 </head>
+
 <body>
 
 <nav>
-    <div id="logo">SafeNet</div>
-    <div style="font-size: 14px;">Личный кабинет</div>
+
+    <div id="logo">
+        SafeNet
+    </div>
+
+    <div id="profileBtn">
+        Личный кабинет
+    </div>
+
 </nav>
 
-<div class="container">
+<!-- ГЛАВНАЯ -->
+<div class="container" id="homePage">
+
     <h2>Новая публикация</h2>
-    
+
     <div class="input-group">
-        <label>О чем ваша новость?</label>       
+
+        <label>Категория</label>
+
         <select id="category">
-            <option value="">-- Выберите ситуацию --</option>
-            <option value="Кража">Кража личных вещей</option>
-            <option value="Мошенничество">Финансовое мошенничество</option>
-            <option value="Магазин">Подозрительный интернет-магазин</option>
-            <option value="Другое">Другое нарушение</option>
+
+            <option value="">Выберите категорию</option>
+
+            <option value="Кража">
+                Кража
+            </option>
+
+            <option value="Мошенничество">
+                Мошенничество
+            </option>
+
+            <option value="Магазин">
+                Подозрительный магазин
+            </option>
+
+            <option value="Другое">
+                Другое
+            </option>
+
         </select>
+
     </div>
 
     <div class="input-group">
+
         <label>Заголовок</label>
-        <input type="text" id="title" placeholder="Краткая суть...">
+
+        <input type="text" id="title">
+
     </div>
 
     <div class="input-group">
-        <label>Детальное описание (не менее 15 слов)</label>
-        <textarea id="content" rows="5" placeholder="Опишите ситуацию максимально подробно..."></textarea>
-        <div id="wordCountHint" style="font-size: 12px; color: #999;">Слов: 0 / 15</div>
-        <div id="error" class="error-msg">Описание слишком короткое. Нужно минимум 15 слов для проверки модератором.</div>
+
+        <label>Описание</label>
+
+        <textarea id="content" rows="6"></textarea>
+
+        <div id="wordCount">
+            Слов: 0 / 15
+        </div>
+
+        <div id="error">
+            Минимум 15 слов
+        </div>
+
     </div>
 
-    <button class="btn" onclick="submitPost()">Опубликовать</button>
+    <button class="btn" onclick="submitPost()">
+        Опубликовать
+    </button>
 
-    <div id="feed">
-        </div>
+    <div id="feed"></div>
+
+</div>
+
+<!-- ЛИЧНЫЙ КАБИНЕТ -->
+<div class="container hidden" id="profilePage">
+
+    <button class="btn backBtn" onclick="goHome()">
+        ← Назад
+    </button>
+
+    <h2>Мои публикации</h2>
+
+    <div id="myPosts"></div>
+
 </div>
 
 <script>
-    const contentInput = document.getElementById('content');
-    const wordCountHint = document.getElementById('wordCountHint');
 
+const contentInput = document.getElementById("content");
+const wordCount = document.getElementById("wordCount");
+const error = document.getElementById("error");
 
-    contentInput.addEventListener('input', function() {
-        const words = this.value.trim().split(/\s+/).filter(word => word.length > 0);
-        wordCountHint.innerText = `Слов: ${words.length} / 15`;
-        if (words.length >= 15) {
-            wordCountHint.style.color = "#27ae60";
-        } else {
-            wordCountHint.style.color = "#999";
-        }
-    });
+contentInput.addEventListener("input", function(){
 
-    function submitPost() {
-        const cat = document.getElementById('category').value;
-        const title = document.getElementById('title').value;
-        const text = contentInput.value.trim();
-        const error = document.getElementById('error');
+    const words = this.value
+        .trim()
+        .split(/\s+/)
+        .filter(word => word.length > 0);
 
-    
-        if (!cat) {
-            alert("Пожалуйста, выберите категорию новости.");
-            return;
-        }
+    wordCount.innerText = `Слов: ${words.length} / 15`;
 
+    if(words.length >= 15){
+        wordCount.style.color = "green";
+    }else{
+        wordCount.style.color = "#666";
+    }
 
-        const wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
+});
 
-        if (wordCount < 15) {
-            error.style.display = "block";
-            return;
-        } else {
-            error.style.display = "none";
-        }
+function submitPost(){
 
-        
-        const feed = document.getElementById('feed');
-        const newPost = `
-            <div class="post">
-                <div class="category-tag">${cat}</div>
-                <h3 style="margin: 10px 0;">${title}</h3>
-                <p>${text}</p>
-                <button class="btn" style="background:#eee; color:#333; padding: 8px 15px;" onclick="confirmCheck(this)">
-                    Проверить документ
-                </button>
+    const category = document.getElementById("category").value;
+    const title = document.getElementById("title").value.trim();
+    const content = document.getElementById("content").value.trim();
+
+    if(!category || !title || !content){
+
+        alert("Заполните все поля");
+
+        return;
+    }
+
+    const words = content
+        .split(/\s+/)
+        .filter(word => word.length > 0);
+
+    if(words.length < 15){
+
+        error.style.display = "block";
+
+        return;
+    }
+
+    error.style.display = "none";
+
+    const post = {
+
+        id: Date.now(),
+
+        category: category,
+
+        title: title,
+
+        content: content
+
+    };
+
+    let posts = JSON.parse(localStorage.getItem("posts")) || [];
+
+    posts.unshift(post);
+
+    localStorage.setItem("posts", JSON.stringify(posts));
+
+    document.getElementById("category").value = "";
+    document.getElementById("title").value = "";
+    document.getElementById("content").value = "";
+
+    wordCount.innerText = "Слов: 0 / 15";
+
+    showPosts();
+
+    alert("Публикация добавлена!");
+
+}
+
+function showPosts(){
+
+    const feed = document.getElementById("feed");
+
+    const myPosts = document.getElementById("myPosts");
+
+    let posts = JSON.parse(localStorage.getItem("posts")) || [];
+
+    feed.innerHTML = "";
+
+    myPosts.innerHTML = "";
+
+    if(posts.length === 0){
+
+        feed.innerHTML = `
+            <div class="empty">
+                Пока публикаций нет
             </div>
         `;
-        
-        feed.insertAdjacentHTML('afterbegin', newPost);
-        
-    
-        document.getElementById('title').value = "";
-        contentInput.value = "";
-        document.getElementById('category').value = "";
-        wordCountHint.innerText = "Слов: 0 / 15";
+
+        myPosts.innerHTML = `
+            <div class="empty">
+                У вас пока нет публикаций
+            </div>
+        `;
+
+        return;
     }
 
-    function confirmCheck(btn) {
-        btn.innerText = "Запрос отправлен модератору";
-        btn.disabled = true;
-        btn.style.opacity = "0.5";
-    }
+    posts.forEach(post => {
+
+        const postHTML = `
+
+            <div class="post">
+
+                <div class="category">
+                    ${post.category}
+                </div>
+
+                <h3>
+                    ${post.title}
+                </h3>
+
+                <p>
+                    ${post.content}
+                </p>
+
+                <button
+                    class="btn deleteBtn"
+                    onclick="deletePost(${post.id})"
+                >
+                    Удалить
+                </button>
+
+            </div>
+
+        `;
+
+        feed.innerHTML += postHTML;
+
+        myPosts.innerHTML += postHTML;
+
+    });
+
+}
+
+function deletePost(id){
+
+    let posts = JSON.parse(localStorage.getItem("posts")) || [];
+
+    posts = posts.filter(post => post.id !== id);
+
+    localStorage.setItem("posts", JSON.stringify(posts));
+
+    showPosts();
+
+}
+
+document.getElementById("profileBtn").onclick = function(){
+
+    document.getElementById("homePage").classList.add("hidden");
+
+    document.getElementById("profilePage").classList.remove("hidden");
+
+};
+
+function goHome(){
+
+    document.getElementById("profilePage").classList.add("hidden");
+
+    document.getElementById("homePage").classList.remove("hidden");
+
+}
+
+showPosts();
+
 </script>
 
 </body>
